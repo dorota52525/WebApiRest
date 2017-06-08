@@ -61,22 +61,6 @@ namespace WebApiRest.Controllers
         }
 
         // PUT: api/books/{id}
-        public IHttpActionResult Put(int id, Book book)
-        {
-            if (book == null || book.Id != id)
-            {
-                return BadRequest();
-            }
-            var bookToUpdate = books.FirstOrDefault(x => x.Id == id);
-            if (bookToUpdate == null)
-            {
-                return NotFound();
-            }
-
-            int index = books.FindIndex(x => x.Id == id);
-            books[index] = book;
-
-            return Ok();
-        }   
+        
     }
 }
