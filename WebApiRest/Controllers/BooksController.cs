@@ -19,6 +19,7 @@ namespace WebApiRest.Controllers
         };
 
         // GET: api/books
+        
         public List<Book> Get()
         {
             return books;
@@ -44,7 +45,7 @@ namespace WebApiRest.Controllers
             }
             books.Add(book);
 
-            return StatusCode(HttpStatusCode.Created);
+            return CreatedAtRoute("DefaultApi", new { id = book.Id }, book);
         }
 
         // DELETE: api/books/{id}
@@ -61,6 +62,21 @@ namespace WebApiRest.Controllers
         }
 
         // PUT: api/books/{id}
-        
+        public IHttpActionResult Put(int id, Book book)
+        {
+            if(book ==null || book.Id != id)
+            {
+                return BadRequest();
+            }
+            var booktoupdate = books.FirstOrDefault(b => b.Id == id);
+            if (booktoupdate == null)
+            {
+                return Content(HttpStatusCode.NotFound, "nie ma takiej ksiazki");
+            }
+            int index = books.FindIndex(b => b.Id == id);
+            books[index] = book;
+            return StatusCode(HttpStatusCode.NoContent);
+            
+        }
     }
 }
